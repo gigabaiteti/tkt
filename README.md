@@ -7,7 +7,7 @@ Nós fornecemos um instalador automático para instalação da aplicação. Entr
 
 ## Requisitos do Sistema
 
-- VPS Ubuntu 20.04 com 3 vCPU's + 4 GB RAM)
+- VPS Ubuntu 20.04 com 3 vCPU's + 4 GB RAM
 - Subdominio para Frontend
 - Subdominio para API
 - E-mail válido para certificação SSL
