@@ -3,17 +3,7 @@
 
 ## Instruções de Instalação
 
-Primeira instalação:
-
-```bash
-sudo apt install -y git && git clone https://github.com/oanselmogomes/stp install && sudo chmod -R 777 ./install && cd ./install && sudo ./install_primaria
-```
-
-Instalação de instância:
-
-```bash
-cd && cd ./install && sudo ./install_instancia
-```
+Nós fornecemos um instalador automático para instalação da aplicação. Entre em contato com o suporte em nosso site para saber dos detalhes.
 
 ## Requisitos do Sistema
 
