@@ -395,6 +395,9 @@ const messages = {
           financeiro: "Financeiro",
           files: "Lista de arquivos",
           prompts: "OpenAI",
+          appBar: {
+            notRegister: "Nenhuma conversa"
+          }          
         },
         appBar: {
           user: {
