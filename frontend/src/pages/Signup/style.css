@@ -9,6 +9,22 @@ body {
   /* overflow: hidden; */
 }
 
+.box {
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 6px -3px,
+    rgba(0, 0, 0, 0.14) 0px 10px 14px 1px, rgba(0, 0, 0, 0.12) 0px 4px 18px 3px;
+  display: flex;
+  flex-direction: column;
+  inline-size: 462px;
+  line-height: 20.02px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px 20px;
+  margin: 0 10px;
+}
+
 .geral-signup {
   display: flex;
 }

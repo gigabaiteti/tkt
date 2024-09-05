@@ -17,6 +17,7 @@ import Box from "@material-ui/core/Box";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import logo from "../../assets/logo-dark.svg";
@@ -26,6 +27,40 @@ import "./style.css";
 import { openApi } from "../../services/api";
 import toastError from "../../errors/toastError";
 import moment from "moment";
+
+const mode = 'light';
+
+const theme = createTheme({
+  palette: {
+    type: mode,
+    primary: { main: mode === "light" ? "#2E3235" : "#F3F3F3" },
+    textPrimary: mode === "light" ? "#2E3235" : "#F3F3F3",
+    borderPrimary: mode === "light" ? "#2E3235" : "#F3F3F3",
+    dark: { main: mode === "light" ? "#2E3235" : "#F3F3F3" },
+    light: { main: mode === "light" ? "#F3F3F3" : "#2E3235" },
+    tabHeaderBackground: mode === "light" ? "#EEEEEE" : "#2E3235",
+    optionsBackground: mode === "light" ? "#FAFAFA" : "#2E3235",
+    options: mode === "light" ? "#FAFAFA" : "#666666",
+    fontecor: mode === "light" ? "#2E3235" : "#F3F3F3",
+    fancyBackground: mode === "light" ? "#FAFAFA" : "#2E3235",
+    bordabox: mode === "light" ? "#EEEEEE" : "#2E3235",
+    newmessagebox: mode === "light" ? "#EEEEEE" : "#2E3235",
+    inputdigita: mode === "light" ? "#F3F3F3" : "#2E3235",
+    contactdrawer: mode === "light" ? "#F3F3F3" : "#2E3235",
+    announcements: mode === "light" ? "#EDEDED" : "#2E3235",
+    login: mode === "light" ? "#F3F3F3" : "#2E3235",
+    announcementspopover: mode === "light" ? "#F3F3F3" : "#2E3235",
+    chatlist: mode === "light" ? "#EEEEEE" : "#2E3235",
+    boxlist: mode === "light" ? "#EDEDED" : "#2E3235",
+    boxchatlist: mode === "light" ? "#EDEDED" : "#2E3235",
+    total: mode === "light" ? "#F3F3F3" : "#2E3235",
+    messageIcons: mode === "light" ? "grey" : "#F3F3F3",
+    inputBackground: mode === "light" ? "#F3F3F3" : "#2E3235",
+    barraSuperior: mode === "light" ? "linear-gradient(to right, #2E3235, #585B5D)" : "#666666",
+    boxticket: mode === "light" ? "#EEEEEE" : "#2E3235",
+    campaigntab: mode === "light" ? "#EDEDED" : "#2E3235"
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -104,151 +139,158 @@ const SignUp = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        const planList = await getPlanList({listPublic: "false"});
+      const planList = await getPlanList({ listPublic: "false" });
 
-        setPlans(planList);
+      setPlans(planList);
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  }, []);
 
   return (
     <div className="geral-signup">
-      <div className={"container-signup"}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className={"container-signup"}>
 
-        <img alt={"Logo"} src={logo} className="img-logo-signup"></img><br /><br />
-          
-        <div className={"paper"}>
-          <Typography component="h1" variant="h5">Cadastre-se</Typography>
-          {/* <form className={classes.form} noValidate onSubmit={handleSignUp}> */}
+          <img alt={"Logo"} src={logo} className="img-logo-signup"></img><br /><br />
 
-          <Formik
-            initialValues={user}
-            enableReinitialize={true}
-            validationSchema={UserSchema}
-            onSubmit={(values, actions) => {
-              setTimeout(() => {
-                handleSignUp(values);
-                actions.setSubmitting(false);
-              }, 400);
-            }}
-          >
-            {({ touched, errors, isSubmitting }) => (
-              <Form className={classes.form}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <p>Nome:</p>
-                    <TextField
-                      margin="dense"
-                      autoComplete="name"
-                      name="name"
-                      error={touched.name && Boolean(errors.name)}
-                      helperText={touched.name && errors.name}
-                      variant="outlined"
-                      fullWidth
-                      id="name"
-                      label="Seu nome"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <p>Seu número de Whatsapp:</p>
-                    <TextField
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                      id="phone"
-                      label="Telefone com (DDD)"
-                      name="phone"
-                      error={touched.email && Boolean(errors.email)}
-                      helperText={touched.email && errors.email}
-                      autoComplete="phone"
-                      required
-                    />
-                  </Grid>
+          <div className={"paper"}>
+            <Typography component="h1" variant="h5">Cadastre-se</Typography>
+            {/* <form className={classes.form} noValidate onSubmit={handleSignUp}> */}
 
-                  <Grid item xs={12}>
-                    <p>Dados de acesso</p>
-                    <TextField
-                      variant="outlined"
-                      margin="dense"
-                      fullWidth
-                      id="email"
-                      label={i18n.t("signup.form.email")}
-                      name="email"
-                      error={touched.email && Boolean(errors.email)}
-                      helperText={touched.email && errors.email}
-                      autoComplete="email"
-                      required
-                    />
-                  </Grid>
+            <Formik
+              initialValues={user}
+              enableReinitialize={true}
+              validationSchema={UserSchema}
+              onSubmit={(values, actions) => {
+                setTimeout(() => {
+                  handleSignUp(values);
+                  actions.setSubmitting(false);
+                }, 400);
+              }}
+            >
+              {({ touched, errors, isSubmitting }) => (
+                <form className={classes.form}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <p>Nome:</p>
+                      <TextField
+                        margin="dense"
+                        autoComplete="name"
+                        name="name"
+                        error={touched.name && Boolean(errors.name)}
+                        helperText={touched.name && errors.name}
+                        variant="outlined"
+                        fullWidth
+                        id="name"
+                        label="Seu nome"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <p>Seu número de Whatsapp:</p>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        fullWidth
+                        id="phone"
+                        label="Telefone com (DDD)"
+                        name="phone"
+                        error={touched.email && Boolean(errors.email)}
+                        helperText={touched.email && errors.email}
+                        autoComplete="phone"
+                        required
+                      />
+                    </Grid>
 
-                  <Grid item xs={12}>
-                    <TextField
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                      name="password"
-                      error={touched.password && Boolean(errors.password)}
-                      helperText={touched.password && errors.password}
-                      label={i18n.t("signup.form.password")}
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                      required
-                    />
+                    <Grid item xs={12}>
+                      <p>Dados de acesso</p>
+                      <TextField
+                        variant="outlined"
+                        margin="dense"
+                        fullWidth
+                        id="email"
+                        label={i18n.t("signup.form.email")}
+                        name="email"
+                        error={touched.email && Boolean(errors.email)}
+                        helperText={touched.email && errors.email}
+                        autoComplete="email"
+                        required
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        fullWidth
+                        name="password"
+                        error={touched.password && Boolean(errors.password)}
+                        helperText={touched.password && errors.password}
+                        label={i18n.t("signup.form.password")}
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        required
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <InputLabel htmlFor="plan-selection">Plano</InputLabel>
+                      <Field
+                        as={Select}
+                        margin="dense"
+                        variant="outlined"
+                        fullWidth
+                        id="plan-selection"
+                        label="Plano"
+                        name="planId"
+                        required
+                      >
+                        {plans.map((plan, key) => (
+                          <MenuItem key={key} value={plan.id}>
+                            {plan.name} - Atendentes: {plan.users} - WhatsApp:{" "}
+                            {plan.connections} - Filas: {plan.queues} - R${" "}
+                            {plan.value}
+                          </MenuItem>
+                        ))}
+                      </Field>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <InputLabel htmlFor="plan-selection">Plano</InputLabel>
-                    <Field
-                      as={Select}
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                      id="plan-selection"
-                      label="Plano"
-                      name="planId"
-                      required
-                    >
-                      {plans.map((plan, key) => (
-                        <MenuItem key={key} value={plan.id}>
-                          {plan.name} - Atendentes: {plan.users} - WhatsApp:{" "}
-                          {plan.connections} - Filas: {plan.queues} - R${" "}
-                          {plan.value}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
-                  margin="dense"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  {i18n.t("signup.buttons.submit")}
-                </Button>
-                <Grid container justifyContent="center">
-                  <Grid item>
-                    <Link
-                      href="#"
-                      variant="body1"
-                      component={RouterLink}
-                      to="/login"
-                      style={{ color: "#585B5D", fontWeight: 500 }}
-                    >Já tem uma conta? Faça login
-                    </Link>
-                  </Grid>
-                </Grid>
-              </Form>
-            )}
-          </Formik>
+                  <Button
+                    type="submit"
+                    margin="dense"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    {i18n.t("signup.buttons.submit")}
+                  </Button>
+                </form>
+              )}
+            </Formik>
+          </div>
+
+          <br />
+
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link
+                href="#"
+                variant="body1"
+                component={RouterLink}
+                to="/login"
+                style={{ color: "#585B5D", fontWeight: 500 }}
+              >Já tem uma conta? Faça login
+              </Link>
+            </Grid>
+          </Grid>
+
         </div>
-      </div>
-      <div className={"container-img-signup"}>
-        <div className="img-signup"></div>
-      </div>
+        <div className={"container-img-signup"}>
+          <div className="img-signup"></div>
+        </div>
+      </ThemeProvider>
     </div>
   );
 };
